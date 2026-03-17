@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-const SpotlightCard = ({ children, className = "", spotlightColor = "rgba(192, 25, 44, 0.15)" }) => {
+const SpotlightCard = ({ children, className = "", spotlightColor = "rgba(177, 158, 239, 0.15)" }) => {
   const divRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });

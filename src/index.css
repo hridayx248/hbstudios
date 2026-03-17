@@ -6,7 +6,7 @@
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Inter', sans-serif;
 
-  --color-brand-red: #c0192c;
+  --color-brand-red: #B19EEF;
   --color-brand-paper: #f5f2eb;
   --color-brand-ink: #1a1a1a;
 
@@ -21,7 +21,7 @@
 }
 
 :root {
-  --brand-red: #c0192c;
+  --brand-red: #B19EEF;
   --brand-paper: #f5f2eb;
   --brand-ink: #1a1a1a;
 }

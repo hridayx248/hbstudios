@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import DecryptedText from './components/ReactBits/DecryptedText';
 import SpotlightCard from './components/ReactBits/SpotlightCard';
 import ShinyText from './components/ReactBits/ShinyText';
+import Aurora from './components/ReactBits/Aurora';
+import GhostCursor from './components/ReactBits/GhostCursor';
+import GlassSurface from './components/ReactBits/GlassSurface';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -9,27 +12,37 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Smoothly increment progress
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 5) + 1;
+        return prev + 1;
       });
-    }, 50);
+    }, 10);
+
+    // Force set loading to false after a timeout
+    const timer = setTimeout(() => {
+      setLoading(false);
+      setProgress(100);
+    }, 1500);
 
     const handleLoad = () => {
       setProgress(100);
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 300);
     };
 
-    window.addEventListener('load', handleLoad);
-    const safetyTimeout = setTimeout(handleLoad, 3500);
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
 
     return () => {
       window.removeEventListener('load', handleLoad);
-      clearTimeout(safetyTimeout);
+      clearTimeout(timer);
       clearInterval(interval);
     };
   }, []);
@@ -49,10 +62,16 @@ function App() {
   }, [loading]);
 
   return (
-    <div className="paper-grain">
+    <div className="paper-grain relative">
+      <GhostCursor 
+        color="#B19EEF" 
+        trailLength={30} 
+        bloomStrength={0.2} 
+        className="fixed inset-0 z-0 opacity-50 pointer-events-none"
+      />
       {/* Cinematic Loader */}
       {loading && (
-        <div id="loader" className={`fixed inset-0 bg-brand-ink z-[10000] flex flex-col items-center justify-center color-white transition-opacity duration-800 ${progress === 100 ? 'opacity-0 invisible' : 'opacity-100'}`}>
+        <div id="loader" className={`fixed inset-0 bg-brand-ink z-[10000] flex flex-col items-center justify-center text-white transition-opacity duration-800 ${progress === 100 ? 'opacity-0 invisible' : 'opacity-100'}`}>
           <div className="flex flex-col items-center text-white">
             <div className="font-display text-8xl md:text-[12rem] leading-none mb-4 opacity-10 select-none pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               HB
@@ -61,7 +80,7 @@ function App() {
             <div className="w-[150px] h-[1px] bg-white/10 mt-5 relative overflow-hidden z-10">
               <div 
                 className="absolute left-0 top-0 h-full bg-brand-red transition-all duration-300" 
-                style={{ width: `${progress}%` }}
+                style={{ width: `${progress}%`, backgroundColor: 'var(--brand-red)' }}
               ></div>
             </div>
             <div className="mt-4 font-mono text-sm relative z-10">
@@ -169,10 +188,17 @@ function App() {
         </div>
 
         <div className="bg-brand-ink relative overflow-hidden hidden lg:block">
-          <div className="absolute inset-0 opacity-60">
+          <div className="absolute inset-0">
+            <Aurora
+              colorStops={['#B19EEF', '#1a1a1a', '#B19EEF']}
+              amplitude={1.2}
+              speed={0.5}
+            />
+          </div>
+          <div className="absolute inset-0 opacity-20 mix-blend-overlay">
             <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=1200" alt="Smoke Abstract" className="w-full h-full object-cover" />
           </div>
-          <div className="absolute bottom-12 right-12 text-right">
+          <div className="absolute bottom-12 right-12 text-right z-10">
             <div className="font-mono text-[10px] text-white/40 mb-2 uppercase tracking-tighter">ESTABLISHED 2026 // HB_STU_UK</div>
             <div className="font-display text-4xl text-white/80 tracking-widest">CRAFTING DIGITAL EXCELLENCE</div>
           </div>
@@ -230,7 +256,7 @@ function App() {
               <SpotlightCard 
                 key={idx} 
                 className="reveal bg-white/50 backdrop-blur-sm p-8 border border-brand-ink/5 group hover:border-brand-red/20 transition-colors"
-                spotlightColor="rgba(192, 25, 44, 0.08)"
+                spotlightColor="rgba(177, 158, 239, 0.08)"
               >
                 <div className="font-mono text-brand-red text-sm mb-6">{service.num}</div>
                 <h3 className="font-display text-3xl mb-4 uppercase group-hover:text-brand-red transition-colors">{service.title}</h3>
@@ -266,17 +292,26 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="relative reveal">
-            <div className="aspect-square bg-brand-paper/5 rounded-2xl p-12 flex flex-col justify-between border border-white/10">
-              <div className="font-mono text-[10px] text-brand-red uppercase mb-8 tracking-widest">Client Feedback</div>
-              <div className="space-y-6">
-                <p className="font-sans text-white/80 text-lg leading-relaxed italic">
-                  "The whole experience was fast, personalised, and exceeded our expectations."
-                </p>
-                <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest">— TruBamboo</p>
+          <div className="relative reveal h-full">
+            <GlassSurface 
+              className="aspect-square border border-white/10"
+              borderRadius={24}
+              backgroundOpacity={0.05}
+              opacity={0.1}
+              blur={15}
+              brightness={10}
+            >
+              <div className="p-12 h-full flex flex-col justify-between">
+                <div className="font-mono text-[10px] text-brand-red uppercase mb-8 tracking-widest">Client Feedback</div>
+                <div className="space-y-6">
+                  <p className="font-sans text-white/80 text-lg leading-relaxed italic">
+                    "The whole experience was fast, personalised, and exceeded our expectations."
+                  </p>
+                  <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest">— TruBamboo</p>
+                </div>
+                <div className="font-mono text-[8px] text-white/30">TECH_STACK // CLOUDFLARE_PAGES</div>
               </div>
-              <div className="font-mono text-[8px] text-white/30">TECH_STACK // CLOUDFLARE_PAGES</div>
-            </div>
+            </GlassSurface>
           </div>
         </div>
       </section>

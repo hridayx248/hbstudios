@@ -14,7 +14,7 @@ export default {
       },
       colors: {
         brand: {
-          red: '#c0192c',
+          red: '#B19EEF',
           paper: '#f5f2eb',
           ink: '#1a1a1a',
         }

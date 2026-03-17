@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | HB Studios UK - Coventry Web Designers</title>
+    <meta name="description" content="Learn about HB Studios UK, a Coventry-based studio crafting bespoke digital experiences. No templates, just hand-coded excellence.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Bebas Neue', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#c0192c',
+                            paper: '#f5f2eb',
+                            ink: '#1a1a1a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --brand-red: #c0192c;
+            --brand-paper: #f5f2eb;
+            --brand-ink: #1a1a1a;
+        }
+
+        body {
+            background-color: var(--brand-paper);
+            color: var(--brand-ink);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Paper Grain Texture */
+        .paper-grain::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cinematic Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--brand-ink);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1), visibility 0.8s;
+        }
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-bar {
+            width: 150px;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .loader-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--brand-red);
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--brand-ink);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        #mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        /* Superscript styling */
+        .nav-link sup {
+            font-size: 0.6rem;
+            color: var(--brand-red);
+            margin-left: 2px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 4rem !important; }
+            .grid { gap: 3rem !important; }
+        }
+    </style>
+</head>
+<body class="paper-grain">
+
+    <!-- Cinematic Loader -->
+    <div id="loader">
+        <div class="flex flex-col items-center">
+            <div class="font-display text-8xl md:text-[12rem] leading-none mb-4 opacity-10 select-none pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                HB
+            </div>
+            <span class="font-display text-4xl tracking-widest mb-2 relative z-10 text-white">HB STUDIOS</span>
+            <div class="loader-bar relative z-10">
+                <div id="loader-progress" class="loader-progress"></div>
+            </div>
+            <div class="mt-4 font-mono text-sm relative z-10 text-white">
+                <span id="loader-counter">0</span>%
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" aria-hidden="true">
+        <button id="close-menu" class="absolute top-8 right-8 text-white/50 font-mono text-[10px] uppercase tracking-widest" aria-label="Close mobile menu">Close [X]</button>
+        <div class="flex flex-col items-center space-y-8">
+            <a href="index.html" class="font-display text-5xl text-white hover:text-brand-red transition-colors">Home</a>
+            <a href="portfolio.html" class="font-display text-5xl text-white hover:text-brand-red transition-colors">Portfolio</a>
+            <a href="services.html" class="font-display text-5xl text-white hover:text-brand-red transition-colors">Services</a>
+            <a href="packages.html" class="font-display text-5xl text-white hover:text-brand-red transition-colors">Packages</a>
+            <a href="about.html" class="font-display text-5xl text-white hover:text-brand-red transition-colors">About</a>
+            <a href="audit.html" class="bg-brand-red text-white px-8 py-4 font-mono text-[10px] uppercase tracking-widest mt-8">Free Audit</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center bg-brand-paper/80 backdrop-blur-sm border-b border-brand-ink/5">
+        <div class="flex-1">
+            <a href="index.html" class="font-display text-2xl tracking-tighter" aria-label="HB Studios UK Home">HB STUDIOS UK</a>
+        </div>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex flex-1 justify-center space-x-10 font-mono text-[10px] uppercase tracking-widest" role="navigation">
+            <a href="index.html" class="nav-link">Home<sup>01</sup></a>
+            <a href="portfolio.html" class="nav-link">Portfolio<sup>02</sup></a>
+            <a href="services.html" class="nav-link">Services<sup>03</sup></a>
+            <a href="packages.html" class="nav-link">Packages<sup>04</sup></a>
+            <a href="about.html" class="nav-link">About<sup>05</sup></a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="menu-toggle" class="lg:hidden font-mono text-[10px] uppercase tracking-widest" aria-label="Open mobile menu">
+            Menu [=]
+        </button>
+
+        <div class="hidden lg:flex flex-1 justify-end">
+            <a href="audit.html" class="bg-brand-red text-white px-6 py-3 font-mono text-[10px] uppercase tracking-widest hover:bg-brand-ink transition-all duration-300">
+                Free Website Audit
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="pt-48 pb-20 px-6 md:px-20">
+        <div class="max-w-7xl mx-auto reveal active">
+            <span class="font-mono text-xs text-brand-red uppercase tracking-widest mb-4 block">The Studio // VOL.01</span>
+            <h1 class="font-display text-7xl md:text-9xl leading-none uppercase max-w-4xl">
+                Bespoke <span class="italic font-serif normal-case text-brand-red">Excellence</span> From Coventry
+            </h1>
+        </div>
+    </header>
+
+    <!-- Studio Description -->
+    <section class="py-20 px-6 md:px-20 border-t border-brand-ink/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <div class="reveal">
+                <p class="font-sans text-2xl md:text-3xl leading-snug opacity-80">
+                    HB Studios is a Coventry-based web design studio. We build cinematic, conversion-focused websites hand-coded from scratch. No templates, no shortcuts.
+                </p>
+            </div>
+            <div class="reveal">
+                <p class="font-sans text-lg opacity-60 mb-12 leading-relaxed">
+                    Most agencies are too expensive, too slow, or too templated. We built HB Studios as the alternative: studio-quality output at a fair price, delivered by people who genuinely care about the result.
+                </p>
+                <div class="space-y-6">
+                    <h4 class="font-mono text-[10px] uppercase tracking-widest text-brand-red">Our Approach</h4>
+                    <ul class="font-mono text-[11px] uppercase space-y-4 tracking-widest">
+                        <li>/ Hand-Coded From Scratch</li>
+                        <li>/ Detail-Obsessed</li>
+                        <li>/ Direct Founder Access</li>
+                        <li>/ Results-Driven</li>
+                        <li>/ Transparent Always</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-32 px-6 md:px-20 bg-brand-ink text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="reveal mb-20">
+                <span class="font-mono text-xs text-brand-red uppercase tracking-widest mb-4 block">Founders // 2026</span>
+                <h2 class="font-display text-6xl md:text-8xl uppercase">Meet The <span class="italic font-serif normal-case text-brand-red">Team</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Hriday -->
+                <div class="reveal group border border-white/10 p-12 bg-white/5 hover:bg-white/10 transition-all duration-500">
+                    <div class="mb-12">
+                        <div class="font-display text-8xl md:text-9xl text-brand-red opacity-20 mb-4 select-none">HN</div>
+                        <div class="flex justify-between items-end border-b border-white/20 pb-4">
+                            <h3 class="font-display text-5xl uppercase">Hriday Nijhawan</h3>
+                            <a href="https://www.linkedin.com/in/hriday-nijhawan-4344aa39b/" class="font-mono text-[10px] uppercase text-brand-red border-b border-brand-red" target="_blank">LinkedIn</a>
+                        </div>
+                        <p class="font-mono text-[10px] uppercase tracking-widest opacity-40 mt-4">Co-Founder & Designer</p>
+                    </div>
+                    <p class="font-sans text-lg opacity-60 leading-relaxed max-w-md">
+                        Sixth form student at Bablake School Coventry, studying Mathematics, Business, and Physics. Several years of web design experience. Passionate F1 fan.
+                    </p>
+                </div>
+
+                <!-- Daniel -->
+                <div class="reveal group border border-white/10 p-12 bg-white/5 hover:bg-white/10 transition-all duration-500">
+                    <div class="mb-12">
+                        <div class="font-display text-8xl md:text-9xl text-brand-red opacity-20 mb-4 select-none">DB</div>
+                        <div class="flex justify-between items-end border-b border-white/20 pb-4">
+                            <h3 class="font-display text-5xl uppercase">Daniel Bains</h3>
+                            <a href="https://www.linkedin.com/in/daniel-bains-296a1b3ab/" class="font-mono text-[10px] uppercase text-brand-red border-b border-brand-red" target="_blank">LinkedIn</a>
+                        </div>
+                        <p class="font-mono text-[10px] uppercase tracking-widest opacity-40 mt-4">Co-Founder & Designer</p>
+                    </div>
+                    <p class="font-sans text-lg opacity-60 leading-relaxed max-w-md">
+                        Sixth form student at Bablake School Coventry, studying Further Mathematics, Mathematics, Physics, and Economics. Several years of web design experience. Car enthusiast.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-paper pt-32 pb-12 px-6 md:px-20 border-t border-brand-ink/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="font-display text-4xl mb-6 uppercase">HB STUDIOS UK</h3>
+                    <p class="font-sans text-sm opacity-60 max-w-sm mb-8">Modern websites that grow your business. Based in Coventry, UK. Hand-coded from scratch since 2026.</p>
+                </div>
+                <div>
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] mb-8 opacity-40">Quick Links</h4>
+                    <ul class="font-mono text-[11px] uppercase space-y-4 tracking-widest">
+                        <li><a href="index.html" class="hover:text-brand-red">Home</a></li>
+                        <li><a href="portfolio.html" class="hover:text-brand-red">Portfolio</a></li>
+                        <li><a href="services.html" class="hover:text-brand-red">Services</a></li>
+                        <li><a href="packages.html" class="hover:text-brand-red">Packages</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] mb-8 opacity-40">Connect</h4>
+                    <ul class="font-mono text-[11px] uppercase space-y-4 tracking-widest">
+                        <li><a href="https://www.linkedin.com/in/hriday-nijhawan-4344aa39b/" class="hover:text-brand-red" target="_blank">Hriday LinkedIn</a></li>
+                        <li><a href="https://www.linkedin.com/in/daniel-bains-296a1b3ab/" class="hover:text-brand-red" target="_blank">Daniel LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-brand-ink/5 pt-12 font-mono text-[9px] uppercase tracking-widest opacity-40">
+                <span>© 2026 HB Studios UK. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Improved Loader Logic
+        const loader = document.getElementById('loader');
+        const progress = document.getElementById('loader-progress');
+        const counter = document.getElementById('loader-counter');
+        let count = 0;
+        
+        const interval = setInterval(() => {
+            if (count < 90) {
+                count += Math.floor(Math.random() * 5) + 1;
+            } else if (count < 100) {
+                count += 0.5;
+            }
+            if (count >= 100) count = 100;
+            progress.style.width = count + '%';
+            counter.innerText = Math.floor(count);
+        }, 20);
+
+        const hideLoader = () => {
+            count = 100;
+            progress.style.width = '100%';
+            counter.innerText = '100';
+            clearInterval(interval);
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        };
+
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, 3500);
+
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
